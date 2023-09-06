@@ -1,0 +1,48 @@
+version: '2'
+services:
+  traefik:
+    image: traefik:1.7
+    command: --web --docker --docker.domain=soho.live --logLevel=ERROR
+    ports:
+      - "80:80"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /dev/null:/traefik.toml
+  mongo:
+    image: mongo:4.4.3-bionic
+    restart: always
+    ports:
+      - 27017:27017
+    volumes:
+      - data:/data/db
+  backend:
+    build:
+      context: ./
+      dockerfile: ./backend/dev.Dockerfile
+    labels:
+      - "traefik.port=80"
+      - "traefik.enable=true"
+      - "traefik.frontend.rule=Host:backend.soho.conf"
+    volumes:
+      - ./backend/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 9229:9229
+  client:
+    build:
+       context: client/
+       dockerfile: dev.Dockerfile
+    labels:
+      - "traefik.port=80"
+      - "traefik.frontend.rule=Host:client.soho.conf"
+    environment:
+      - PORT=80
+      - HOSTNAME=client.soho.conf
+    volumes:
+      - ./client/:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 9228:9229
+volumes:
+  data:
