@@ -6,6 +6,8 @@ import authMiddleware from "../middlewares/authMiddleware.js";
 
 const router = express.Router();
 
+router.get('/authorized', authMiddleware, catchError(userController.authorized));
+
 router.post('/login', catchError(userController.login));
 
 router.post('/register', catchError(userController.register));

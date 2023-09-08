@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import {toast} from "react-toastify"; // Import the Link component
+import {toast} from "react-toastify";
 
 export const Login = () => {
     const [email, setEmail] = useState('');
@@ -24,7 +24,6 @@ export const Login = () => {
                 }
             });
         } catch (error) {
-            console.error("Error during login:", error);
             toast.error(error.message, {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -36,12 +35,12 @@ export const Login = () => {
             <h2>Login</h2>
             <form className="login-form" onSubmit={handleSubmit}>
                 <label htmlFor="email">Email</label>
-                <input value={email} onChange={(e) => setEmail(e.target.value)}type="email" placeholder="youremail@gmail.com" id="email" name="email" />
+                <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder="youremail@gmail.com" id="email" name="email" />
                 <label htmlFor="password">Password</label>
                 <input value={password} onChange={(e) => setPass(e.target.value)} type="password" placeholder="********" id="password" name="password" />
                 <button type="submit">Log In</button>
             </form>
-            <Link to="/register" className="link-btn">Don't have an account? Register here.</Link> {/* Use Link component here */}
+            <Link to="/register" className="link-btn">Don't have an account? Register here.</Link>
         </div>
     )
 }

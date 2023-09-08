@@ -1,5 +1,9 @@
 import * as userService from '../services/userService.js';
 
+export const authorized = async (req, res) => {
+    return res.status(200).send('Authorized');
+  };
+
 export const login = async (req, res) => {
     const session = req.session;
     const {

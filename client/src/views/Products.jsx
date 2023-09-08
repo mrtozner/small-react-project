@@ -217,7 +217,7 @@ export const Products = () => {
     };
 
     useEffect(() => {
-        async function fetchProducts() {
+        const fetchProducts = async () => {
             try {
                 const response = await axios.get(`http://backend.soho.conf/api/products/?limit=${itemsPerPage}&page=${currentPage}`,{
                     headers: { 'Authorization': `Bearer ${token}` }
